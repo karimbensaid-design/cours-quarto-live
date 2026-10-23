@@ -1,0 +1,116 @@
+---
+title: "TP : Test de Student et Conditions de Validité sous R"
+subtitle: "Application en Microbiologie - Niveau Master 1"
+author:
+  - name: K. Bensaid
+    affiliation: Université de Béjaïa | Faculté des Sciences de la Nature et de la Vie | Département de Microbiologie
+format:
+  live-html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    embed-resources: true
+engine: knitr
+webr:
+  packages: []
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## 1. Contexte Microbiologique et Jeu de Données
+
+En microbiologie, la comparaison de deux moyennes est une démarche fondamentale. Par exemple :
+- **Échantillons indépendants :** Comparer le diamètre de la zone d'inhibition (en mm) produit par une huile essentielle ($HE_A$ vs $HE_B$) sur *Staphylococcus aureus*.
+- **Échantillons appariés :** Comparer la densité optique ($DO_{600}$) d'une même souche bactérienne avant et après l'ajout d'un agent antibactérien.
+
+Dans ce TP interactif, nous simulerons d'abord des données expérimentales de zones d'inhibition pour deux huiles essentielles.
+
+```{webr}
+#| setup: true
+#| exercise: setup_donnees
+
+# Simulation des données de microbiologie
+set.seed(123)
+n <- 25
+HE_A <- rnorm(n, mean = 21.5, sd = 2.1)
+HE_B <- rnorm(n, mean = 18.2, sd = 3.4)
+
+donnees_microbio <- data.frame(
+  Inhibition = c(HE_A, HE_B),
+  Traitements = factor(rep(c("Huile_A", "Huile_B"), each = n))
+)
+```
+
+Exécutez le bloc ci-dessous pour explorer la structure de nos données :
+
+Extrait de code
+
+
+# Affichage des 6 premières lignes du jeu de données
+
+```{webr}
+head(donnees_microbio)
+
+# Calcul des moyennes et écarts-types par groupe
+by(donnees_microbio$Inhibition, donnees_microbio$Traitements, summary)
+```
+2. Étape 1 : Vérification de la Normalité
+
+L'une des conditions primordiales d'application du test 
+t de Student est la normalité de la variable dans chacun des groupes.
+
+A) Approche Graphique : Quantile-Quantile Plot (QQ-Plot)
+Le graphique QQ-plot permet d'évaluer visuellement si les données observées suivent une loi normale théorique.
+
+Extrait de code
+
+
+# Extraction des mesures pour Huile_A
+
+```{webr}
+zones_A <- donnees_microbio$Inhibition[donnees_microbio$Traitements == "Huile_A"]
+
+# Graphique QQ-plot et droite de Henry
+qqnorm(zones_A, main = "QQ-Plot - Zone d'inhibition (Huile A)", pch = 19, col = "darkgreen")
+qqline(zones_A, col = "red", lwd = 2)
+```
+
+B) Approche Analytique : Test de Shapiro-Wilk
+Hypothèse nulle (𝐻0) : Les données suivent une distribution normale.
+
+Hypothèse alternative (H1): Les données ne suivent pas une distribution normale.
+
+Si la 𝑝-value>0.05, l'hypothèse de normalité est conservée.
+
+Exercice 1 : Appliquez le test de Shapiro-Wilk sur les mesures du groupe zones_A.
+
+Extrait de code
+
+
+#| exercise: exo_shapiro
+# Calculez le test de Shapiro-Wilk sur zones_A
+___(zones_A)
+
+::: { .hint exercise="exo_shapiro" }
+Indice : Utilisez la fonction de R base shapiro.test().
+:::
+
+Extrait de code
+
+```{web}
+#| exercise: exo_shapiro
+#| check: true
+if (!grepl("shapiro\\.test", .user_code)) {
+  list(correct = FALSE, message = "Vous devez utiliser la fonction shapiro.test().")
+} else if (inherits(.result, "htest") && identical(.result$method, "Shapiro-Wilk normality test")) {
+  list(correct = TRUE, message = "Bravo ! La p-value étant supérieure à 0.05, la condition de normalité est respectée pour le groupe Huile A.")
+} else {
+  list(correct = FALSE, message = "Une erreur s'est glissée dans le code.")
+}
+```
+
+3. Étape 2 : Égalité des Variances (Homoscédasticité)
+Avant de choisir la variante du test de Student (Student classique vs Welch), nous devons tester l'égalité des variances des deux groupes.
+
+
+
