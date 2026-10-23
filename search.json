@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Statistiques Microbiologie",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "student.html",
+    "href": "student.html",
+    "title": "TP : Test de Student et Conditions de Validité sous R",
+    "section": "",
+    "text": "En microbiologie, la comparaison de deux moyennes est une démarche fondamentale. Par exemple : - Échantillons indépendants : Comparer le diamètre de la zone d’inhibition (en mm) produit par une huile essentielle (\\(HE_A\\) vs \\(HE_B\\)) sur Staphylococcus aureus. - Échantillons appariés : Comparer la densité optique (\\(DO_{600}\\)) d’une même souche bactérienne avant et après l’ajout d’un agent antibactérien.\nDans ce TP interactif, nous simulerons d’abord des données expérimentales de zones d’inhibition pour deux huiles essentielles.\n\n\n\nExécutez le bloc ci-dessous pour explorer la structure de nos données :\nExtrait de code"
+  },
+  {
+    "objectID": "student.html#contexte-microbiologique-et-jeu-de-données",
+    "href": "student.html#contexte-microbiologique-et-jeu-de-données",
+    "title": "TP : Test de Student et Conditions de Validité sous R",
+    "section": "",
+    "text": "En microbiologie, la comparaison de deux moyennes est une démarche fondamentale. Par exemple : - Échantillons indépendants : Comparer le diamètre de la zone d’inhibition (en mm) produit par une huile essentielle (\\(HE_A\\) vs \\(HE_B\\)) sur Staphylococcus aureus. - Échantillons appariés : Comparer la densité optique (\\(DO_{600}\\)) d’une même souche bactérienne avant et après l’ajout d’un agent antibactérien.\nDans ce TP interactif, nous simulerons d’abord des données expérimentales de zones d’inhibition pour deux huiles essentielles.\n\n\n\nExécutez le bloc ci-dessous pour explorer la structure de nos données :\nExtrait de code"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  }
+]
